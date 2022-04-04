@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body style="overflow: hidden">
+    <div
+      id="hud"
+      class="hidden"
+      style="position: relative; display: inline-block"
+    >
+      <div
+        style="
+          position: absolute;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          padding: 20px;
+        "
+      >
+        <!-- player health -->
+        <div
+          style="
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            border: 3px solid #fff;
+          "
+        >
+          <div style="background-color: red; height: 15px; width: 100%"></div>
+          <div
+            id="playerHealth"
+            style="
+              position: absolute;
+              background: #818cf8;
+              top: 0;
+              right: 0;
+              bottom: 0;
+              width: 100%;
+            "
+          ></div>
+        </div>
+        <!-- timer -->
+        <div
+          id="timer"
+          style="
+            background-color: #000;
+            color: #fff;
+            font-family: monospace;
+            font-size: 25px;
+
+            font-weight: bold;
+            width: 50px;
+            height: 30px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 3px solid #ccc;
+          "
+        ></div>
+        <!-- enemy health -->
+        <div style="position: relative; width: 100%; border: 3px solid #fff">
+          <div
+            style="
+              background-color: red;
+              height: 15px;
+              width: 100%;
+              border: 1px solid #fff;
+            "
+          ></div>
+          <div
+            id="enemyHealth"
+            style="
+              position: absolute;
+              background: #818cf8;
+              top: 0;
+              right: 0;
+              bottom: 0;
+              left: 0;
+              width: 100%;
+            "
+          ></div>
+        </div>
+      </div>
+      <div
+        id="winner"
+        style="
+          position: absolute;
+          color: white;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          width: 100%;
+          display: none;
+        "
+      >
+        Tie
+      </div>
+    </div>
+
+    <!-- start button -->
+    <div id="start" class="start">Start</div>
+    <div class="js-overlay overlay">
+      <div class="preloader">
+        <div class="preloader__square"></div>
+        <div class="preloader__square"></div>
+        <div class="preloader__square"></div>
+        <div class="preloader__square"></div>
+      </div>
+
+      <!-- <div class="status">
+      <span class="status__dot">.</span><span class="status__dot">.</span
+      ><span class="status__dot">.</span>
+    </div> -->
+    </div>
+    <canvas class="hidden"></canvas>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.2/gsap.min.js"
+      integrity="sha512-kVlGhj2qFy+KBCFuvjBJTGUMxbdqJKs4yK2jh0e0VPhWUPiPC87bzm4THmaaIee3Oj7j6sDpTTgm2EPPiESqBg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="js/utils.js"></script>
+    <script src="js/classes.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>
