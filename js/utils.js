@@ -13,14 +13,16 @@ function reload() {
 function determineWinner({ player, enemy, timerId }) {
   clearTimeout(timerId);
   document.querySelector('#winner').style.display = 'flex';
-  if (player.health === enemy.health) {
+  if (enemy.score >= 5) {
+    document.querySelector('#winner').innerHTML = 'GAME OVER';
+  } else if (player.health === enemy.health) {
     document.querySelector('#winner').innerHTML = 'TIE';
   } else if (player.health > enemy.health) {
     document.querySelector('#winner').innerHTML = 'PLAYER WINS';
   } else if (player.health < enemy.health) {
     document.querySelector('#winner').innerHTML = 'ENEMY WINS';
   }
-  setTimeout(reload(), 3000);
+  // setTimeout(reload(), 3000);
 }
 
 // TIMER

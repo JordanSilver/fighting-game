@@ -3,6 +3,9 @@ const overlay = document.querySelector('.js-overlay');
 const start = document.querySelector('#start');
 const splash = document.querySelector('.splash');
 const hud = document.querySelector('#hud');
+const gameBtnLeft = document.querySelector('#game-button-left');
+const gameBtnRight = document.querySelector('#game-button-right');
+const gameBtnJump = document.querySelector('#game-button-jump');
 const c = canvas.getContext('2d');
 
 canvas.width = window.innerWidth;
@@ -154,7 +157,7 @@ const enemy = new Fighter({
       x: 0,
       y: 10,
     },
-    width: 100,
+    width: 120,
     height: 25,
   },
 });
@@ -222,8 +225,8 @@ function makeBots({ amount = 1 }) {
       },
       attackBox: {
         offset: {
-          x: -80,
-          y: 10,
+          x: 0,
+          y: 0,
         },
         width: 25,
         height: 30,
@@ -309,7 +312,13 @@ function animate() {
       enemy.switchSprite('idle');
     }
   }
-  if (enemy.velocity.y < 0 && enemy.position.y > canvas.height / 2) {
+  // dont let enemy jump until position is halfway up the screen
+  if (enemy.position.y < canvas.height / 2 && enemy.lastKey === 'ArrowUp') {
+    enemy.velocity.y = -0.2;
+    enemy.switchSprite('run');
+  }
+
+  if (enemy.velocity.y < 0) {
     enemy.switchSprite('jump');
     if (enemy.lastKey === 'ArrowRight') {
       enemy.switchSprite('jumpLeft');
@@ -327,9 +336,9 @@ function animate() {
 
   // change enemy hitbox for direction moving
   if (enemy.velocity.x > 0) {
-    enemy.attackBox.offset.x = 125;
+    enemy.attackBox.offset.x = 100;
   } else if (enemy.velocity.x < 0) {
-    enemy.attackBox.offset.x = 0;
+    enemy.attackBox.offset.x = -75;
   }
   // bot movement in relation to enemy
 
@@ -357,13 +366,14 @@ function animate() {
       bot.position.y > enemy.position.y - bot.attackBox.height &&
       bot.position.y < enemy.position.y + enemy.attackBox.height
     ) {
-      if (!bot.dead) {
-        bot.switchSprite('attack');
+      // bot attack animation with random chance to hit enemy
+      bot.switchSprite('attack');
+      if (Math.random() > 0.5) {
         enemy.takeHit({ damage: 0.1 });
-        gsap.to('#enemyHealth', {
-          width: enemy.health + '%',
-        });
       }
+      gsap.to('#enemyHealth', {
+        width: enemy.health + '%',
+      });
     }
   });
 
@@ -403,11 +413,13 @@ function animate() {
       enemy.score++;
       bots.splice(i, 1);
       setTimeout(() => {
-        makeBots({ amount: 1 });
+        if (enemy.score <= 4) {
+          makeBots({ amount: 1 });
+        }
       }, 1000);
     }
   });
-  console.log(enemy.score);
+  document.querySelector('#timer').innerHTML = `${enemy.score}`;
   // player miss
   if (player.isAttacking && player.frameCurrent === 3) {
     player.isAttacking = false;
@@ -480,6 +492,36 @@ window.addEventListener('keydown', (e) => {
     }
   }
 });
+
+// mobile touch event listeners for enemy on game buttons
+gameBtnLeft.addEventListener('touchstart', () => {
+  if (!enemy.dead) {
+    keys.ArrowLeft.pressed = true;
+    enemy.lastKey = 'ArrowLeft';
+  }
+});
+gameBtnLeft.addEventListener('touchend', () => {
+  if (!enemy.dead) {
+    keys.ArrowLeft.pressed = false;
+  }
+});
+gameBtnRight.addEventListener('touchstart', () => {
+  if (!enemy.dead) {
+    keys.ArrowRight.pressed = true;
+    enemy.lastKey = 'ArrowRight';
+  }
+});
+gameBtnRight.addEventListener('touchend', () => {
+  if (!enemy.dead) {
+    keys.ArrowRight.pressed = false;
+  }
+});
+gameBtnJump.addEventListener('touchstart', () => {
+  if (!enemy.dead) {
+    enemy.velocity.y = -10;
+  }
+});
+
 window.addEventListener('keyup', (e) => {
   switch (e.key) {
     case 'd':

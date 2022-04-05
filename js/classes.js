@@ -126,11 +126,11 @@ class Fighter extends Sprite {
     this.draw();
     if (!this.dead) this.animateFrames();
 
-    // attack boxes
+    // ATTACK BOX
     this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
     this.attackBox.position.y = this.position.y + this.attackBox.offset.y;
 
-    // attack box helper
+    // ATTACK BOX HELPER
     // c.fillRect(
     //   this.attackBox.position.x,
     //   this.attackBox.position.y,
@@ -144,10 +144,10 @@ class Fighter extends Sprite {
     // gravity function
     if (
       this.position.y + this.height + this.velocity.y >=
-      canvas.height - (2 / 7) * this.height
+      canvas.height - (3 / 7) * this.height
     ) {
       this.velocity.y = 0;
-      this.position.y = canvas.height - (2 / 7) * this.height - this.height;
+      this.position.y = canvas.height - (3 / 7) * this.height - this.height;
     } else {
       this.velocity.y += gravity;
     }
