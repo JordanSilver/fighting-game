@@ -27,7 +27,41 @@
     >
       <!-- game buttons -->
       <div
-        id="game-buttons"
+        id="game-buttons-attack"
+        style="
+          position: fixed;
+          bottom: 1rem;
+          left: 2rem;
+          width: fit-content;
+          height: 50px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: rgba(0, 0, 0, 0.5);
+          padding: 3px 5px;
+          border-radius: 5px;
+          border: 1px solid rgba(255, 255, 255, 0.5);
+          gap: 1rem;
+          font-size: 2rem;
+        "
+      >
+        <!-- game button jump -->
+        <div
+          id="game-button-jump"
+          style="position: relative; cursor: pointer; color: white"
+        >
+          <i class="bi bi-arrow-up-circle"></i>
+        </div>
+        <!-- game button fight -->
+        <div
+          id="game-button-fight"
+          style="position: relative; cursor: pointer; color: white"
+        >
+          <i class="bi bi-x-circle"></i>
+        </div>
+      </div>
+      <div
+        id="game-buttons-dir"
         style="
           position: fixed;
           bottom: 1rem;
@@ -38,7 +72,7 @@
           justify-content: center;
           align-items: center;
           background-color: rgba(0, 0, 0, 0.5);
-          padding: 0 3px;
+          padding: 3px;
           border-radius: 5px;
           border: 1px solid rgba(255, 255, 255, 0.5);
           gap: 1rem;
@@ -52,13 +86,7 @@
         >
           <i class="bi bi-arrow-left-circle"></i>
         </div>
-        <!-- game button jump -->
-        <div
-          id="game-button-jump"
-          style="position: relative; cursor: pointer; color: white"
-        >
-          <i class="bi bi-arrow-up-circle"></i>
-        </div>
+
         <!-- game button right -->
         <div
           id="game-button-right"

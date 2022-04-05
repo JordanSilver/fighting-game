@@ -6,6 +6,7 @@ const hud = document.querySelector('#hud');
 const gameBtnLeft = document.querySelector('#game-button-left');
 const gameBtnRight = document.querySelector('#game-button-right');
 const gameBtnJump = document.querySelector('#game-button-jump');
+const gameBtnAttack = document.querySelector('#game-button-fight');
 const c = canvas.getContext('2d');
 
 canvas.width = window.innerWidth;
@@ -519,6 +520,11 @@ gameBtnRight.addEventListener('touchend', () => {
 gameBtnJump.addEventListener('touchstart', () => {
   if (!enemy.dead) {
     enemy.velocity.y = -10;
+  }
+});
+gameBtnAttack.addEventListener('touchstart', () => {
+  if (!enemy.dead) {
+    enemy.attack();
   }
 });
 
