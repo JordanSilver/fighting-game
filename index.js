@@ -22,7 +22,7 @@ const background = new Background({
 
 const ghost = new Sprite({
   position: {
-    x: 0,
+    x: 100,
     y: 100,
   },
   imageSrc: './img/flying-ob.png',
@@ -35,8 +35,8 @@ const player = new Fighter({
   velocity: { x: 0, y: 0 },
   imageSrc: './img/royalKnight/Idle.png',
   framesMax: 8,
-  scale: 1.5,
-  offset: { x: 20, y: 80 },
+  scale: 1.3,
+  offset: { x: 0, y: 85 },
   sprites: {
     idle: {
       imageSrc: './img/royalKnight/Idle.png',
@@ -48,14 +48,22 @@ const player = new Fighter({
     },
     jump: {
       imageSrc: './img/royalKnight/Jump.png',
-      framesMax: 2,
+      framesMax: 3,
     },
     fall: {
       imageSrc: './img/royalKnight/Fall.png',
-      framesMax: 2,
+      framesMax: 3,
     },
-    attack1: {
+    attack: {
       imageSrc: './img/royalKnight/Attack1.png',
+      framesMax: 4,
+    },
+    attackLeft: {
+      imageSrc: './img/royalKnight/Attack1.png',
+      framesMax: 4,
+    },
+    attack2: {
+      imageSrc: './img/royalKnight/Attack2.png',
       framesMax: 4,
     },
     takeHit: {
@@ -69,8 +77,8 @@ const player = new Fighter({
   },
   attackBox: {
     offset: {
-      x: 100,
-      y: 25,
+      x: 95,
+      y: 10,
     },
     width: 95,
     height: 25,
@@ -91,20 +99,45 @@ const enemy = new Fighter({
       imageSrc: './img/kenji/Idle.png',
       framesMax: 4,
     },
+    idleLeft: {
+      imageSrc: './img/kenji/Idle-left.png',
+      framesMax: 4,
+    },
     run: {
       imageSrc: './img/kenji/Run.png',
+      framesMax: 8,
+    },
+    runLeft: {
+      imageSrc: './img/kenji/Run-left.png',
       framesMax: 8,
     },
     jump: {
       imageSrc: './img/kenji/Jump.png',
       framesMax: 2,
     },
+    jumpLeft: {
+      imageSrc: './img/kenji/Jump-left.png',
+      framesMax: 2,
+    },
+
     fall: {
       imageSrc: './img/kenji/Fall.png',
       framesMax: 2,
     },
-    attack1: {
+    fallLeft: {
+      imageSrc: './img/kenji/Fall-left.png',
+      framesMax: 2,
+    },
+    attack: {
       imageSrc: './img/kenji/Attack1.png',
+      framesMax: 4,
+    },
+    attackLeft: {
+      imageSrc: './img/kenji/Attack2-left.png',
+      framesMax: 4,
+    },
+    attack2: {
+      imageSrc: './img/kenji/Attack2-left.png',
       framesMax: 4,
     },
     takeHit: {
@@ -118,14 +151,90 @@ const enemy = new Fighter({
   },
   attackBox: {
     offset: {
-      x: -190,
-      y: 25,
+      x: 0,
+      y: 10,
     },
     width: 100,
     height: 25,
   },
 });
 
+// make bots
+let bots = [];
+function makeBots({ amount = 1 }) {
+  for (let i = 0; i < amount; i++) {
+    const bot = new Fighter({
+      position: {
+        // enter bots from both sides
+        x: Math.random() > 0.5 ? -100 : canvas.width + 100,
+        y: Math.random() * canvas.height + 60,
+      },
+      velocity: {
+        x: 0,
+        y: 0,
+      },
+      color: 'red',
+      imageSrc: './img/eliteKnight/_Idle.png',
+      framesMax: 10,
+      scale: 1.4,
+      offset: { x: 150, y: 35 },
+      sprites: {
+        idle: {
+          imageSrc: './img/eliteKnight/_Idle.png',
+          framesMax: 10,
+        },
+        run: {
+          imageSrc: './img/eliteKnight/_Run.png',
+          framesMax: 10,
+        },
+        runLeft: {
+          imageSrc: './img/eliteKnight/_Run-left.png',
+          framesMax: 10,
+        },
+        jump: {
+          imageSrc: './img/eliteKnight/_Jump.png',
+          framesMax: 3,
+        },
+        fall: {
+          imageSrc: './img/eliteKnight/_Fall.png',
+          framesMax: 3,
+        },
+        attack: {
+          imageSrc: './img/eliteKnight/_Attack.png',
+          framesMax: 4,
+        },
+        attackLeft: {
+          imageSrc: './img/eliteKnight/_Attack.png',
+          framesMax: 4,
+        },
+        attack2: {
+          imageSrc: './img/eliteKnight/_Attack2.png',
+          framesMax: 6,
+        },
+        takeHit: {
+          imageSrc: './img/eliteKnight/_Hit.png',
+          framesMax: 1,
+        },
+        death: {
+          imageSrc: './img/eliteKnight/_Death.png',
+          framesMax: 10,
+        },
+      },
+      attackBox: {
+        offset: {
+          x: -80,
+          y: 10,
+        },
+        width: 25,
+        height: 30,
+      },
+    });
+    bots.push(bot);
+  }
+}
+makeBots({ amount: 1 });
+
+// KEYBOARD CONTROLS
 const keys = {
   a: {
     pressed: false,
@@ -155,12 +264,15 @@ function animate() {
   c.fillRect(0, 0, canvas.width, canvas.height);
   background.update();
   ghost.update();
-
-  player.update();
   enemy.update();
+  // player.update();
+  bots.forEach((bot) => {
+    bot.update();
+  });
 
   player.velocity.x = 0;
   enemy.velocity.x = 0;
+
   // player movement
 
   if (keys.a.pressed && player.lastKey === 'a') {
@@ -182,36 +294,120 @@ function animate() {
 
   // enemy movement
   if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
-    enemy.velocity.x = -3;
+    enemy.velocity.x = -5;
     enemy.switchSprite('run');
   } else if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
-    enemy.velocity.x = 3;
-    enemy.switchSprite('run');
+    enemy.velocity.x = 5;
+    enemy.switchSprite('runLeft');
   } else {
-    enemy.switchSprite('idle');
+    // idle left for right for enemy
+    if (enemy.lastKey === 'ArrowRight') {
+      enemy.switchSprite('idleLeft');
+    } else if (enemy.lastKey === 'ArrowLeft') {
+      enemy.switchSprite('idle');
+    } else {
+      enemy.switchSprite('idle');
+    }
   }
-  if (enemy.velocity.y < 0) {
+  if (enemy.velocity.y < 0 && enemy.position.y > canvas.height / 2) {
     enemy.switchSprite('jump');
+    if (enemy.lastKey === 'ArrowRight') {
+      enemy.switchSprite('jumpLeft');
+    } else if (enemy.lastKey === 'ArrowLeft') {
+      enemy.switchSprite('jump');
+    }
   } else if (enemy.velocity.y > 0) {
     enemy.switchSprite('fall');
+    if (enemy.lastKey === 'ArrowRight') {
+      enemy.switchSprite('fallLeft');
+    } else if (enemy.lastKey === 'ArrowLeft') {
+      enemy.switchSprite('fall');
+    }
   }
+
+  // change enemy hitbox for direction moving
+  if (enemy.velocity.x > 0) {
+    enemy.attackBox.offset.x = 125;
+  } else if (enemy.velocity.x < 0) {
+    enemy.attackBox.offset.x = 0;
+  }
+  // bot movement in relation to enemy
+
+  bots.forEach((bot) => {
+    if (bot.velocity.y < 0) {
+      bot.switchSprite('jump');
+    } else if (bot.velocity.y > 0) {
+      bot.switchSprite('fall');
+    }
+
+    if (bot.position.x > enemy.position.x + enemy.width / 2) {
+      bot.velocity.x = -1;
+      bot.switchSprite('runLeft');
+    } else if (bot.position.x < enemy.position.x - enemy.width / 2) {
+      bot.velocity.x = 1;
+      bot.switchSprite('run');
+    } else {
+      bot.switchSprite('idle');
+    }
+
+    if (
+      // bot attacks when enemy is in range
+      bot.position.x > enemy.position.x - bot.attackBox.width &&
+      bot.position.x < enemy.position.x + enemy.attackBox.width &&
+      bot.position.y > enemy.position.y - bot.attackBox.height &&
+      bot.position.y < enemy.position.y + enemy.attackBox.height
+    ) {
+      if (!bot.dead) {
+        bot.switchSprite('attack');
+        enemy.takeHit({ damage: 0.1 });
+        gsap.to('#enemyHealth', {
+          width: enemy.health + '%',
+        });
+      }
+    }
+  });
 
   // COLLISION DETECTION
 
-  // player attack collision detection
-  if (
-    rectCollision({ rect1: player, rect2: enemy }) &&
-    player.isAttacking &&
-    player.frameCurrent === 2
-  ) {
-    enemy.takeHit();
-    player.isAttacking = false;
+  // // player attack collision detection
+  // if (
+  //   rectCollision({ rect1: player, rect2: enemy }) &&
+  //   player.isAttacking &&
+  //   player.frameCurrent === 2
+  // ) {
+  //   enemy.takeHit();
+  //   player.isAttacking = false;
 
-    gsap.to('#enemyHealth', {
-      width: enemy.health + '%',
-    });
-  }
+  //   gsap.to('#enemyHealth', {
+  //     width: enemy.health + '%',
+  //   });
+  // }
 
+  // Enemy attack collision detection with bot
+  bots.forEach((bot) => {
+    if (
+      rectCollision({ rect1: enemy, rect2: bot }) &&
+      enemy.isAttacking &&
+      enemy.frameCurrent === 2
+    ) {
+      bot.takeHit({ damage: 100 });
+      enemy.isAttacking = false;
+    }
+  });
+
+  // count the bots killed by enemy and update the score
+
+  // if bot is dead, remove it from the array and add a new bot, after a delay
+  bots.forEach((bot, i) => {
+    if (bot.dead) {
+      enemy.score++;
+      bots.splice(i, 1);
+      setTimeout(() => {
+        makeBots({ amount: 1 });
+      }, 1000);
+    }
+  });
+  console.log(enemy.score);
   // player miss
   if (player.isAttacking && player.frameCurrent === 3) {
     player.isAttacking = false;
@@ -234,8 +430,9 @@ function animate() {
       width: player.health + '%',
     });
   }
-  // end game based on health
-  if (enemy.health <= 0 || player.health <= 0) {
+
+  // END GAME BASED ON HEALTH
+  if (enemy.health <= 0 || player.health <= 0 || enemy.score >= 5) {
     determineWinner({ player, enemy, timerId });
   }
 }
@@ -278,6 +475,7 @@ window.addEventListener('keydown', (e) => {
         break;
       case 'ArrowDown':
         enemy.attack();
+
         break;
     }
   }
@@ -330,9 +528,8 @@ const hideOverlay = () => {
 start.addEventListener('click', () => {
   start.classList.add('hidden');
   canvas.classList.remove('hidden');
-
   setTimeout(hideOverlay, 2600);
   setTimeout(removeOverlay, 2800);
-  setTimeout(decreaseTimer, 300);
-  setTimeout(animate, 2700);
+  // setTimeout(decreaseTimer, 300);
+  setTimeout(animate, 2800);
 });

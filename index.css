@@ -76,7 +76,7 @@
   font-size: calc(16px + (32 - 16) * (100vw - 320px) / (2560 - 320));
 }
 body {
-  background-image: linear-gradient(145deg, var(--shade3), var(--shade2));
+  background-image: linear-gradient(145deg, var(--shade3), var(--shade4));
   color: var(--fg);
   display: flex;
   font: 1em/1.5 Hind, sans-serif;
@@ -115,7 +115,31 @@ main {
   background: rgba(0, 0, 0, 1);
   color: rgba(255, 255, 255, 1);
   cursor: pointer !important;
+  background-image: url('/img/grass-background.png');
+  background-size: cover;
+  background-position: center;
+  transition: background 200ms ease-out;
+
   z-index: 100;
+}
+
+.start-btn {
+  /* button styles */
+  background: var(--shade4);
+  border: 1px solid var(--shade3);
+  border-radius: 4px;
+  color: var(--fg);
+  font-size: 1em;
+  padding: 3px 1em;
+  text-decoration: none;
+  transition: all 200ms ease-out;
+  cursor: pointer;
+}
+
+.start-btn:hover {
+  background: var(--shade3);
+  color: var(--fg);
+  transition: all 200ms ease-out;
 }
 .hidden {
   display: none;

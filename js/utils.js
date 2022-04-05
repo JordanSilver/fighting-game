@@ -6,6 +6,9 @@ function rectCollision({ rect1, rect2 }) {
     rect1.attackBox.position.y <= rect2.position.y + rect2.height
   );
 }
+function reload() {
+  window.location.reload();
+}
 
 function determineWinner({ player, enemy, timerId }) {
   clearTimeout(timerId);
@@ -17,6 +20,7 @@ function determineWinner({ player, enemy, timerId }) {
   } else if (player.health < enemy.health) {
     document.querySelector('#winner').innerHTML = 'ENEMY WINS';
   }
+  setTimeout(reload(), 3000);
 }
 
 // TIMER
