@@ -12,6 +12,13 @@
         margin: 0;
       }
     </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css"
+      integrity="sha512-Oy+sz5W86PK0ZIkawrG0iv7XwWhYecM3exvUtMKNJMekGFJtVAhibhRPTpmyTj8+lJCkmWfnpxKgT2OopquBHA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <link rel="stylesheet" href="index.css" />
   </head>
   <body style="overflow: hidden">
@@ -30,53 +37,19 @@
         id="game-buttons-attack"
         style="
           position: fixed;
-          bottom: 1rem;
+          bottom: 0.5rem;
           left: 2rem;
           width: fit-content;
-          height: 50px;
+          height: fit-content;
           display: flex;
           justify-content: center;
           align-items: center;
           background-color: rgba(0, 0, 0, 0.5);
-          padding: 3px 5px;
+          padding: 3px 6px;
           border-radius: 5px;
           border: 1px solid rgba(255, 255, 255, 0.5);
-          gap: 1rem;
-          font-size: 2rem;
-        "
-      >
-        <!-- game button jump -->
-        <div
-          id="game-button-jump"
-          style="position: relative; cursor: pointer; color: white"
-        >
-          <i class="bi bi-arrow-up-circle"></i>
-        </div>
-        <!-- game button fight -->
-        <div
-          id="game-button-fight"
-          style="position: relative; cursor: pointer; color: white"
-        >
-          <i class="bi bi-x-circle"></i>
-        </div>
-      </div>
-      <div
-        id="game-buttons-dir"
-        style="
-          position: fixed;
-          bottom: 1rem;
-          right: 2rem;
-          width: fit-content;
-          height: 50px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background-color: rgba(0, 0, 0, 0.5);
-          padding: 3px;
-          border-radius: 5px;
-          border: 1px solid rgba(255, 255, 255, 0.5);
-          gap: 1rem;
-          font-size: 2rem;
+          gap: 2rem;
+          font-size: 2.2rem;
         "
       >
         <!-- game button left -->
@@ -93,6 +66,40 @@
           style="position: relative; cursor: pointer; color: white"
         >
           <i class="bi bi-arrow-right-circle"></i>
+        </div>
+      </div>
+      <div
+        id="game-buttons-dir"
+        style="
+          position: fixed;
+          bottom: 0.5rem;
+          right: 2rem;
+          width: fit-content;
+          height: fit-content;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: rgba(0, 0, 0, 0.5);
+          padding: 3px 6px;
+          border-radius: 5px;
+          border: 1px solid rgba(255, 255, 255, 0.5);
+          gap: 1.3rem;
+          font-size: 2.2rem;
+        "
+      >
+        <!-- game button jump -->
+        <div
+          id="game-button-jump"
+          style="position: relative; cursor: pointer; color: white"
+        >
+          <i class="bi bi-arrow-up-circle"></i>
+        </div>
+        <!-- game button fight -->
+        <div
+          id="game-button-fight"
+          style="position: relative; cursor: pointer; color: white"
+        >
+          <i class="bi bi-x-circle"></i>
         </div>
       </div>
       <div
@@ -178,13 +185,13 @@
     </div> -->
     </div>
     <canvas class="hidden"></canvas>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css"
-      integrity="sha512-Oy+sz5W86PK0ZIkawrG0iv7XwWhYecM3exvUtMKNJMekGFJtVAhibhRPTpmyTj8+lJCkmWfnpxKgT2OopquBHA=="
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"
+      integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
-    />
+    ></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.2/gsap.min.js"
       integrity="sha512-kVlGhj2qFy+KBCFuvjBJTGUMxbdqJKs4yK2jh0e0VPhWUPiPC87bzm4THmaaIee3Oj7j6sDpTTgm2EPPiESqBg=="
